@@ -4,10 +4,10 @@ from exceptions import ServiceExit
 from job import Job
 from helpers import service_shutdown
 
-class Looper():
+class Timeloop():
     def __init__(self):
         self.jobs = []
-        logger = logging.getLogger('looper')
+        logger = logging.getLogger('timeloop')
         ch = logging.StreamHandler(sys.stdout)
         ch.setLevel(logging.INFO)
         formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s')
@@ -31,11 +31,11 @@ class Looper():
             signal.signal(signal.SIGTERM, service_shutdown)
             signal.signal(signal.SIGINT, service_shutdown)
 
-            self.logger.info("Starting looper..")
+            self.logger.info("Starting Timeloop..")
             for j in self.jobs:
                 self.logger.info("Registered task {}".format(j.execute))
                 j.start()
-            self.logger.info("Looper now started. Tasks will run based on the interval set")
+            self.logger.info("Timeloop now started. Tasks will run based on the interval set")
 
             # block main thead
             while True:
@@ -45,3 +45,4 @@ class Looper():
             for j in self.jobs:
                 self.logger.info("Stopping task {}".format(j.execute))
                 j.stop()
+            self.logger.info("Timeloop exited.")
