@@ -9,6 +9,10 @@ Inspired by this blog [`here`](https://www.g-loaded.eu/2016/11/24/how-to-termina
 ```sh
 python setup.py install
 ```
+or
+```sh
+pip install git+git://github.com/sankalpjonn/looper.git
+```
 
 ## writing a job looks like this
 

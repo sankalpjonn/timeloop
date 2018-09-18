@@ -7,7 +7,7 @@ from helpers import service_shutdown
 class Looper():
     def __init__(self):
         self.jobs = []
-        logger = logging.getLogger('looperr')
+        logger = logging.getLogger('looper')
         ch = logging.StreamHandler(sys.stdout)
         ch.setLevel(logging.INFO)
         formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s')
