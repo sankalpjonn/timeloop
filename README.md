@@ -10,8 +10,7 @@ Inspired by this blog [`here`](https://www.g-loaded.eu/2016/11/24/how-to-termina
 pip install timeloop
 ```
 
-## writing a job looks like this
-
+## Writing jobs
 ```python
 import time
 
@@ -32,8 +31,28 @@ def sample_job_every_5s():
 @tl.job(interval=timedelta(seconds=10))
 def sample_job_every_10s():
     print "10s job current time : {}".format(time.ctime())
+```
 
+## Start time loop in separate thread
+By default timeloop starts in a separate thread.
+
+Please do not forget to call ```tl.stop``` before exiting the program, Or else the jobs wont shut down gracefully.
+
+```python
 tl.start()
+
+while True:
+  try:
+    time.sleep(1)
+  except KeyboardInterrupt:
+    tl.stop()
+    break
+```
+
+## Start time loop in main thread
+Doing this will automatically shut down the jobs gracefully when the program is killed, so no need to  call ```tl.stop```
+```python
+tl.start(block=True)
 ```
 
 ## Author
