@@ -1,8 +1,12 @@
-import logging, sys, signal, time
+import logging
+import sys
+import signal
+import time
 
-from exceptions import ServiceExit
-from job import Job
-from helpers import service_shutdown
+from timeloop.exceptions import ServiceExit
+from timeloop.job import Job
+from timeloop.helpers import service_shutdown
+
 
 class Timeloop():
     def __init__(self):
