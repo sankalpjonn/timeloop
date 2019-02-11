@@ -1,1 +1,1 @@
-from app import Timeloop
+from .app import Timeloop
