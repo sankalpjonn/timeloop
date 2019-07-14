@@ -35,6 +35,17 @@ def sample_job_every_10s():
     print "10s job current time : {}".format(time.ctime())
 ```
 
+## Writing jobs with arguments
+```python
+@tl.job(interval=timedelta(seconds=5))
+def sample_job(idx):
+    print "Task id: {} | time: {}".format(idx, time.ctime())
+
+# example: queue jobs with different ids
+for id in range(1, 3):
+	task(id)
+```
+
 ## Start time loop in separate thread
 By default timeloop starts in a separate thread.
 
