@@ -15,5 +15,7 @@ class Job(Thread):
         self.join()
 
     def run(self):
-        while not self.stopped.wait(self.interval.total_seconds()):
+        while True:
             self.execute(*self.args, **self.kwargs)
+            if self.stopped.wait(self.interval.total_seconds()):
+                break
