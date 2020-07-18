@@ -1,8 +1,6 @@
 # Timeloop
 Timeloop is a service that can be used to run periodic tasks after a certain interval.
 
-![timeloop](http://66.42.57.109/timeloop.jpg)
-
 Each job runs on a separate thread and when the service is shut down, it waits till all tasks currently being executed are completed.
 
 Inspired by this blog [`here`](https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/)
