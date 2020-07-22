@@ -35,9 +35,10 @@ class Timeloop():
                 self.stop()
                 break
 
-    def _start_jobs(self, block):
+    def _start_jobs(self, block, stop_on_exception):
         for j in self.jobs:
             j.daemon = not block
+            j.stop_on_exception = stop_on_exception
             j.start()
             self.logger.info("Registered job {}".format(j.execute))
 
@@ -56,9 +57,9 @@ class Timeloop():
         self._stop_jobs()
         self.logger.info("Timeloop exited.")
 
-    def start(self, block=False):
+    def start(self, block=False, stop_on_exception=False):
         self.logger.info("Starting Timeloop..")
-        self._start_jobs(block=block)
+        self._start_jobs(block=block,stop_on_exception=stop_on_exception)
 
         self.logger.info("Timeloop now started. Jobs will run based on the interval set")
         if block:
