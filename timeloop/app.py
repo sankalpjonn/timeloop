@@ -48,8 +48,10 @@ class Timeloop():
 
     def job(self, interval):
         def decorator(f):
-            self._add_job(f, interval)
-            return f
+            def wrapper(*args, **kwargs):
+                self._add_job(f, interval, *args, **kwargs)
+                return f
+            return wrapper
         return decorator
 
     def stop(self):
