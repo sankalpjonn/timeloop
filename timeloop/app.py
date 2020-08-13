@@ -1,3 +1,4 @@
+import datetime
 import logging
 import sys
 import signal
@@ -20,8 +21,8 @@ class Timeloop():
         logger.setLevel(logging.INFO)
         self.logger = logger
 
-    def _add_job(self, func, interval, *args, **kwargs):
-        j = Job(interval, func, *args, **kwargs)
+    def _add_job(self, func, interval, run_on_start, *args, **kwargs):
+        j = Job(interval, run_on_start, func, *args, **kwargs)
         self.jobs.append(j)
 
     def _block_main_thread(self):
@@ -46,9 +47,12 @@ class Timeloop():
             self.logger.info("Stopping job {}".format(j.execute))
             j.stop()
 
-    def job(self, interval):
+    def job(self, interval=None, run_on_start=False):
+        if not interval or not isinstance(interval, datetime.timedelta):
+            raise TypeError('interval must be a timedelta and cannot be None')
+
         def decorator(f):
-            self._add_job(f, interval)
+            self._add_job(f, interval, run_on_start)
             return f
         return decorator
 
