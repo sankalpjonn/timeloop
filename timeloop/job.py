@@ -15,5 +15,10 @@ class Job(Thread):
         self.join()
 
     def run(self):
-        while not self.stopped.wait(self.interval.total_seconds()):
-            self.execute(*self.args, **self.kwargs)
+        stopped = self.stopped
+        timeout = self.interval.total_seconds()
+        task = self.execute
+        
+        while not stopped.is_set():
+            task(*self.args, **self.kwargs)
+            stopped.wait(timeout)
