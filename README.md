@@ -11,6 +11,8 @@ pip install timeloop
 ```
 
 ## Writing jobs
+The jobs run the first time after the first wait interval.
+
 ```python
 import time
 
@@ -48,6 +50,20 @@ tl = Timeloop()
 def run_me_twice_with_10s_pause():
     print("10s job current time : {}".format(time.ctime()))
 ```
+
+## Jobs with a different initial interval
+At times, you want 
+```python
+@tl.job(interval=timedelta(seconds=1), initial_delay=timedelta(seconds=10))
+def run_after10s_and_then_every_second():
+    print("job current time : {}".format(time.ctime()))
+
+
+@tl.job(interval=timedelta(seconds=1), num_executions=2, initial_delay=timedelta(seconds=10))
+def run_after10s_and_then_after_1second_then_stop():
+    print("job current time : {}".format(time.ctime()))
+```
+
 
 ## Start time loop in separate thread
 By default timeloop starts in a separate thread.
