@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
  name='timeloop',
- version='1.0.2',
+ version='1.0.3',
  packages=['timeloop'],
  license = 'MIT',
  description = 'An elegant way to run period tasks.',

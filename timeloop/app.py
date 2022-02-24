@@ -1,11 +1,12 @@
 import logging
-import sys
 import signal
+import sys
 import time
+from datetime import timedelta
 
 from timeloop.exceptions import ServiceExit
-from timeloop.job import Job
 from timeloop.helpers import service_shutdown
+from timeloop.job import Job
 
 
 class Timeloop():
@@ -46,10 +47,14 @@ class Timeloop():
             self.logger.info("Stopping job {}".format(j.execute))
             j.stop()
 
-    def job(self, interval):
+    def job(self, interval: timedelta, num_executions: int = Job.UNLIMITED_EXECUTION, initial_delay: timedelta = None):
+        if initial_delay is None:
+            initial_delay = interval
+
         def decorator(f):
-            self._add_job(f, interval)
+            self._add_job(f, interval, num_executions=num_executions, initial_delay=initial_delay)
             return f
+
         return decorator
 
     def stop(self):
