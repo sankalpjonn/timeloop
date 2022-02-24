@@ -1,5 +1,5 @@
 from threading import Thread, Event
-from datetime import timedelta
+
 
 class Job(Thread):
     def __init__(self, interval, execute, *args, **kwargs):
