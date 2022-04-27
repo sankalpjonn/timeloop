@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import logging
 import sys
 import signal
@@ -20,8 +21,8 @@ class Timeloop():
         logger.setLevel(logging.INFO)
         self.logger = logger
 
-    def _add_job(self, func, interval, *args, **kwargs):
-        j = Job(interval, func, *args, **kwargs)
+    def _add_job(self, func, interval: timedelta, offset: timedelta=None, *args, **kwargs):
+        j = Job(interval, func, offset=offset *args, **kwargs)
         self.jobs.append(j)
 
     def _block_main_thread(self):
@@ -46,9 +47,15 @@ class Timeloop():
             self.logger.info("Stopping job {}".format(j.execute))
             j.stop()
 
-    def job(self, interval):
+    def job(self, interval: timedelta, offset: timedelta=None):
+        """Decorator to define a timeloop for the decorated function.
+
+        Args:
+            interval (timedelta): How long to wait after every execution until the next one.
+            offset (timedelta, optional): Positive offset until the first execution of the function. If None, will wait with first execution until the first interval passed. If timedelta with length 0 (or smaller) will execute immediately. Defaults to None.
+        """
         def decorator(f):
-            self._add_job(f, interval)
+            self._add_job(f, interval, offset=offset)
             return f
         return decorator
 
