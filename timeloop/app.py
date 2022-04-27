@@ -22,7 +22,7 @@ class Timeloop():
         self.logger = logger
 
     def _add_job(self, func, interval: timedelta, offset: timedelta=None, *args, **kwargs):
-        j = Job(interval, func, offset=offset *args, **kwargs)
+        j = Job(interval, func, offset=offset, *args, **kwargs)
         self.jobs.append(j)
 
     def _block_main_thread(self):
