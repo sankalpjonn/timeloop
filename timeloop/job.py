@@ -19,6 +19,7 @@ class Job(Thread):
     def run(self):
         if self.offset:
             sleep(self.offset.total_seconds())
+            self.execute(*self.args, **self.kwargs)
         
         while not self.stopped.wait(self.interval.total_seconds()):
             self.execute(*self.args, **self.kwargs)
