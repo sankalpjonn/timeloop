@@ -29,7 +29,7 @@ def sample_job_every_5s():
     print "5s job current time : {}".format(time.ctime())
 
 
-# Added support of initial offset!
+# Added support for initial offset!
 @tl.job(interval=timedelta(seconds=10), offset=timedelta(hours=1))
 def sample_job_after_an_hour_every_10s():
     print "after an hour 10s job current time : {}".format(time.ctime())
