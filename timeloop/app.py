@@ -46,9 +46,9 @@ class Timeloop():
             self.logger.info("Stopping job {}".format(j.execute))
             j.stop()
 
-    def job(self, interval):
+    def job(self, interval, *args, **kwargs):
         def decorator(f):
-            self._add_job(f, interval)
+            self._add_job(f, interval, *args, **kwargs)
             return f
         return decorator
 
